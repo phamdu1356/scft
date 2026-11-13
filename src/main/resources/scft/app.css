@@ -1,16 +1,28 @@
 .sidebar { -fx-background-color: -color-bg-subtle; -fx-border-color: -color-border-muted; -fx-border-width: 0 1 0 0; }
 .nav-btn { -fx-background-color: transparent; -fx-background-radius: 8; -fx-padding: 10 12; -fx-cursor: hand; }
 .nav-btn:hover { -fx-background-color: -color-bg-inset; }
+.nav-btn:focused { -fx-border-color: -color-accent-emphasis; -fx-border-width: 2; -fx-border-radius: 8; }
 .nav-btn:selected { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
 .statusbar { -fx-background-color: -color-bg-subtle; -fx-border-color: -color-border-muted; -fx-border-width: 1 0 0 0; }
-.status-dot { -fx-background-color: -color-fg-subtle; -fx-background-radius: 6; -fx-min-width: 10; -fx-min-height: 10; -fx-max-width: 10; -fx-max-height: 10; }
-.status-dot:on { -fx-background-color: -color-success-emphasis; }
+.status-icon { -fx-icon-color: -color-fg-subtle; }
+.status-icon:on { -fx-icon-color: -color-success-emphasis; }
+.stage-empty { -fx-text-fill: -color-fg-muted; -fx-font-size: 14px; }
+.text-bold { -fx-font-weight: bold; }
 .card { -fx-background-color: -color-bg-subtle; -fx-background-radius: 12; -fx-border-color: -color-border-default; -fx-border-radius: 12; }
-.pair-code { -fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: "monospace"; -fx-text-fill: -color-accent-fg; }
+.pair-code { -fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: "Cascadia Mono", "Consolas", "Menlo", "DejaVu Sans Mono", monospace; -fx-text-fill: -color-accent-fg; }
 .stage { -fx-background-color: -color-bg-inset; -fx-background-radius: 12; }
 .segmented > .toggle-button { -fx-background-radius: 0; }
+.segmented > .toggle-button:first-child { -fx-background-radius: 8 0 0 8; }
+.segmented > .toggle-button:last-child { -fx-background-radius: 0 8 8 0; }
 .segmented > .toggle-button:selected { -fx-background-color: -color-accent-emphasis; -fx-text-fill: white; }
 .dropzone { -fx-border-color: -color-border-default; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 12; -fx-background-radius: 12; -fx-cursor: hand; }
 .dropzone:hover, .dropzone:hover-drop, .dropzone:focused { -fx-border-color: -color-accent-emphasis; -fx-background-color: -color-accent-subtle; }
-.dropzone:disabled { -fx-opacity: 0.5; -fx-cursor: default; }
-.pair-addr { -fx-font-size: 18px; -fx-font-family: "monospace"; }
+.dropzone:disabled { -fx-border-color: -color-border-muted; -fx-cursor: default; -fx-text-fill: -color-fg-muted; }
+.dropzone:disabled .label { -fx-text-fill: -color-fg-muted; }
+.pair-addr { -fx-font-size: 18px; -fx-font-family: "Cascadia Mono", "Consolas", "Menlo", "DejaVu Sans Mono", monospace; }
+.view-scroll { -fx-background-color: transparent; -fx-background: transparent; }
+.view-scroll > .viewport { -fx-background-color: transparent; }
+.error-banner { -fx-background-color: -color-danger-subtle; -fx-border-color: -color-danger-emphasis; -fx-border-width: 0 0 1 0; }
+.error-banner .label, .error-banner .ikonli-font-icon { -fx-text-fill: -color-danger-fg; }
+.sim-banner { -fx-background-color: -color-warning-subtle; -fx-background-radius: 10; -fx-border-color: -color-warning-emphasis; -fx-border-radius: 10; }
+.sim-badge { -fx-background-color: -color-warning-emphasis; -fx-text-fill: white; -fx-padding: 3 8; -fx-background-radius: 6; -fx-font-weight: bold; }
