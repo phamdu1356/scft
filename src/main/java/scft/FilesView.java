@@ -157,10 +157,20 @@ public class FilesView extends VBox {
             name.setText(t.name);
             dirText.setText(in ? "Nhận từ điện thoại" : "Gửi tới điện thoại");
             bar.progressProperty().bind(t.progress);
-            meta.textProperty().bind(Bindings.createStringBinding(() -> t.status.get()
-                    + "  ·  " + TransferItem.human(t.bytes)
-                    + "  ·  " + Math.round(Math.min(1, t.progress.get()) * 100) + "%",
-                    t.status, t.progress));
+            meta.textProperty().bind(Bindings.createStringBinding(() -> {
+                        String s = t.status.get()
+                                + "  ·  " + TransferItem.human(t.bytes)
+                                + "  ·  " + Math.round(Math.min(1, t.progress.get()) * 100) + "%";
+                        if (t.active.get() && t.speed.get() > 0) {
+                            s += "  ·  " + TransferItem.rate(t.speed.get())
+                                    + "  ·  còn " + TransferItem.eta(t.bytes - t.done.get(), t.speed.get());
+                        }
+                        if (!t.sha256.get().isEmpty()) {
+                            s += "  ·  SHA-256 " + t.sha256.get().substring(0, 12) + "…";
+                        }
+                        return s;
+                    },
+                    t.status, t.progress, t.speed, t.active, t.done, t.sha256));
             open.visibleProperty().bind(t.savedTo.isNotNull());
             open.managedProperty().bind(open.visibleProperty());
             setGraphic(row);

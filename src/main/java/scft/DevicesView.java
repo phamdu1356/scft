@@ -16,8 +16,9 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.regex.Pattern;
 
 public class DevicesView extends VBox {
-    private static final Pattern IPV4 = Pattern.compile(
-            "((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)");
+    /** IPv4 address, optionally followed by ":port" (needed only when the other side uses another port). */
+    private static final Pattern ADDR = Pattern.compile(
+            "((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(:\\d{1,5})?");
 
     public DevicesView(LinkService link) {
         super(20);
@@ -119,8 +120,8 @@ public class DevicesView extends VBox {
         Label ipL = new Label("Địa chỉ IP của thiết bị kia");
         ipL.setLabelFor(ip);
         BooleanBinding ipOk = Bindings.createBooleanBinding(
-                () -> IPV4.matcher(ip.getText().trim()).matches(), ip.textProperty());
-        Label ipErr = warning("Địa chỉ IP cần có dạng 192.168.1.20");
+                () -> ADDR.matcher(ip.getText().trim()).matches(), ip.textProperty());
+        Label ipErr = warning("Địa chỉ IP cần có dạng 192.168.1.20 (hoặc 192.168.1.20:45455 nếu máy kia dùng cổng khác)");
         ipErr.visibleProperty().bind(ip.textProperty().isNotEmpty().and(ipOk.not()));
         ipErr.managedProperty().bind(ipErr.visibleProperty());
 

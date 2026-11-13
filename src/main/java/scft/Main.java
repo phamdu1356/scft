@@ -2,6 +2,9 @@ package scft;
 
 import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -27,8 +30,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.awt.Toolkit;
 import java.util.prefs.Preferences;
 
 /** Application shell: sidebar navigation + error banner + swappable content + status bar. */
@@ -41,9 +46,12 @@ public class Main extends Application {
     private Node devicesNode;
     private Node screenNode;
     private ScreenView screenView;
+    private Stage stage;
+    private Timeline ringing;
 
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         dark.set(prefs().getBoolean("dark", false));
         applyTheme(dark.get());
         dark.addListener((o, a, isDark) -> {
@@ -61,8 +69,15 @@ public class Main extends Application {
         Node files = wrap(new FilesView(link, devNav::fire));
         ToggleButton screenNav = navButton("Màn hình", "fth-monitor", "Ctrl+2", nav, screenNode);
         ToggleButton filesNav = navButton("Tệp & dữ liệu", "fth-repeat", "Ctrl+3", nav, files);
+        Node utilsNode = wrap(new UtilsView(link));
+        ToggleButton utilsNav = navButton("Tiện ích", "fth-tool", "Ctrl+4", nav, utilsNode);
 
-        VBox sidebar = new VBox(4, brand(), devNav, screenNav, filesNav);
+        // Find-device from the other side: beep and shake the window for about 10 seconds.
+        link.addListener(m -> {
+            if (m instanceof Msg.Find f) ring(f.on());
+        });
+
+        VBox sidebar = new VBox(4, brand(), devNav, screenNav, filesNav, utilsNav);
         sidebar.getStyleClass().add("sidebar");
         sidebar.setPadding(new Insets(16, 12, 16, 12));
         sidebar.setPrefWidth(220);
@@ -90,11 +105,30 @@ public class Main extends Application {
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.SHORTCUT_DOWN), devNav::fire);
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.SHORTCUT_DOWN), screenNav::fire);
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.SHORTCUT_DOWN), filesNav::fire);
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.SHORTCUT_DOWN), utilsNav::fire);
         stage.setTitle("SCFT");
         stage.setMinWidth(900);
         stage.setMinHeight(600);
         stage.setScene(scene);
         stage.show();
+    }
+
+    /** Beep once a second for 10 seconds and shake the window; stops early when the other side turns it off. */
+    private void ring(boolean on) {
+        if (ringing != null) ringing.stop();
+        ringing = null;
+        if (!on) return;
+        stage.toFront();
+        ringing = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            Toolkit.getDefaultToolkit().beep();
+            TranslateTransition shake = new TranslateTransition(Duration.millis(50), root);
+            shake.setByX(10);
+            shake.setAutoReverse(true);
+            shake.setCycleCount(6);
+            shake.play();
+        }));
+        ringing.setCycleCount(10);
+        ringing.play();
     }
 
     private static Preferences prefs() {
