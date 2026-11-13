@@ -13,3 +13,4 @@
 .dropzone { -fx-border-color: -color-border-default; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 12; -fx-background-radius: 12; -fx-cursor: hand; }
 .dropzone:hover, .dropzone:hover-drop, .dropzone:focused { -fx-border-color: -color-accent-emphasis; -fx-background-color: -color-accent-subtle; }
 .dropzone:disabled { -fx-opacity: 0.5; -fx-cursor: default; }
+.pair-addr { -fx-font-size: 18px; -fx-font-family: "monospace"; }

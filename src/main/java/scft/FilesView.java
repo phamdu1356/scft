@@ -20,8 +20,7 @@ public class FilesView extends VBox {
         Label h = new Label("Tệp & dữ liệu");
         h.getStyleClass().add("title-2");
 
-        Label dirLabel = new Label();
-        dirLabel.textProperty().bind(link.directionProperty().asString("Hướng: %s"));
+        Label dirLabel = new Label("Tệp nhận được lưu tại: " + link.inbox());
         dirLabel.getStyleClass().add("text-muted");
 
         // Drop zone

@@ -29,6 +29,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        link.startListening();
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         dark.addListener((o, a, isDark) -> Application.setUserAgentStylesheet(
                 (isDark ? new PrimerDark() : new PrimerLight()).getUserAgentStylesheet()));
@@ -100,6 +101,11 @@ public class Main extends Application {
         bar.setPadding(new Insets(6, 16, 6, 16));
         bar.getStyleClass().add("statusbar");
         return bar;
+    }
+
+    @Override
+    public void stop() {
+        link.stop();
     }
 
     public static void main(String[] args) {
