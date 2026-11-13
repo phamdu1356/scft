@@ -1,0 +1,15 @@
+.sidebar { -fx-background-color: -color-bg-subtle; -fx-border-color: -color-border-muted; -fx-border-width: 0 1 0 0; }
+.nav-btn { -fx-background-color: transparent; -fx-background-radius: 8; -fx-padding: 10 12; -fx-cursor: hand; }
+.nav-btn:hover { -fx-background-color: -color-bg-inset; }
+.nav-btn:selected { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.statusbar { -fx-background-color: -color-bg-subtle; -fx-border-color: -color-border-muted; -fx-border-width: 1 0 0 0; }
+.status-dot { -fx-background-color: -color-fg-subtle; -fx-background-radius: 6; -fx-min-width: 10; -fx-min-height: 10; -fx-max-width: 10; -fx-max-height: 10; }
+.status-dot:on { -fx-background-color: -color-success-emphasis; }
+.card { -fx-background-color: -color-bg-subtle; -fx-background-radius: 12; -fx-border-color: -color-border-default; -fx-border-radius: 12; }
+.pair-code { -fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: "monospace"; -fx-text-fill: -color-accent-fg; }
+.stage { -fx-background-color: -color-bg-inset; -fx-background-radius: 12; }
+.segmented > .toggle-button { -fx-background-radius: 0; }
+.segmented > .toggle-button:selected { -fx-background-color: -color-accent-emphasis; -fx-text-fill: white; }
+.dropzone { -fx-border-color: -color-border-default; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 12; -fx-background-radius: 12; -fx-cursor: hand; }
+.dropzone:hover, .dropzone:hover-drop, .dropzone:focused { -fx-border-color: -color-accent-emphasis; -fx-background-color: -color-accent-subtle; }
+.dropzone:disabled { -fx-opacity: 0.5; -fx-cursor: default; }
